@@ -3,24 +3,25 @@ import { Container } from 'react-bootstrap';
 import './App.css';
 
 
+const getData = async (url) => {
+    const res = await fetch(url)
+    return await res.json()
+}
 
 const App = () => {
 
     const [counter, setCounter] = useState(0);
     const [data, setData] = useState({});
     const [res, setRes] = useState('');
-    const [valute, setValute] = useState('___')
+    const [valute, setValute] = useState(null)
 
     const onReset = () => {
-        setCounter(counter => counter = 0);
-        setRes(res => res = 0);
-        setValute(valute => valute = '___');
+        setCounter(0);
+        setRes(0);
+        if (valute) {
+            setValute(valute => valute = '___');
+        }
     };
-
-    const getData = async (url) => {
-        const res = await fetch(url)
-        return await res.json()
-    }
 
     useEffect(() => {
         const getExchangeData = async () => {
@@ -28,6 +29,7 @@ const App = () => {
             setData(Valute)
         }
         getExchangeData()
+        setValute(valute => valute = '___')
 
     }, []);
 
